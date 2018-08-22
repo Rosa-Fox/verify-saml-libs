@@ -4,7 +4,7 @@
     stages {
         stage('Build') {
             agent {
-                docker { image 'govukverify/java8:latest' }
+                 label 'spike-a-thon'
             }
             steps {
                 sh './gradlew clean build'
@@ -13,7 +13,9 @@
 
         stage('Tag') {
             when { branch 'master' }
-            agent any
+            agent {
+                 label 'spike-a-thon'
+            }
             environment {
                 // GitHub credentials
                 ACCESS_TOKEN=credentials('verify-ci-build-scan-2017-12-20')
@@ -27,7 +29,7 @@
         stage('Publish') {
             when { branch 'master' }
             agent {
-                docker { image 'govukverify/java8:latest' }
+                 label 'spike-a-thon'
             }
             environment {
                 // Artifactory credentials
